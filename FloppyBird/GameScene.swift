@@ -293,11 +293,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // スコアアップ用のノード --- ここから ---
             let itemScoreNode = SKNode()
-            itemScoreNode.position = CGPoint(x: itemTexture.size().width, y: itemTexture.size().height)
+            ///itemScoreNode.position = CGPoint(x: itemTexture.size().width, y: itemTexture.size().height)
             itemScoreNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: itemTexture.size().width , height: itemTexture.size().height))
             itemScoreNode.physicsBody?.isDynamic = false
             itemScoreNode.physicsBody?.categoryBitMask = self.itemScoreCategory
             itemScoreNode.physicsBody?.contactTestBitMask = self.birdCategory
+            
+            
             
             item.addChild(itemScoreNode)
         
@@ -392,9 +394,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let soundIdRing: SystemSoundID = 1000 //鐘
                 AudioServicesPlaySystemSound(soundIdRing)
                 print("ITEMGET")
+                
+                contact.bodyA.node?.removeFromParent() //アイテム？消えない
+                //contact.bodyB.node?.removeFromParent() //鳥？消える
+                
+            
+                
+                
             } else {
-                
-                
+               
             // 壁か地面と衝突した
             print("GameOver")
 
