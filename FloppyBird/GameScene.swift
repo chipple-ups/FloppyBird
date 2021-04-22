@@ -278,8 +278,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //item = SKSpriteNode(texture: itemTexture)
             item.position = CGPoint(x: self.frame.size.width + itemTexture.size().width / 2 , y: under_item_y)
+            item.physicsBody = SKPhysicsBody(rectangleOf: itemTexture.size())
             item.zPosition = 0 // 雲より手前、地面より奥
-
+            item.physicsBody?.isDynamic = false
+            item.physicsBody?.categoryBitMask = self.itemScoreCategory
+            item.physicsBody?.contactTestBitMask = self.birdCategory
+            
+            
             //let movingItem = SKSpriteNode(texture: itemTexture)
             //movingItem.position = CGPoint(x: 0, y: under_item_y)
             //item.addChild(movingItem)
@@ -287,21 +292,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.item.addChild(item)
             
             // スプライトに物理演算を設定する
-            ///item.physicsBody = SKPhysicsBody(rectangleOf: itemTexture.size())
-            // 衝突のカテゴリー設定
-            item.physicsBody?.categoryBitMask = self.itemScoreCategory
+            ///item.physicsBody = SKPhysicsBody(rectangleOf: itemTexture.size())        // 衝突のカテゴリー設定
+            //item.physicsBody?.categoryBitMask = self.itemScoreCategory
             
             // スコアアップ用のノード --- ここから ---
-            let itemScoreNode = SKNode()
+            ///let itemScoreNode = SKNode()
             ///itemScoreNode.position = CGPoint(x: itemTexture.size().width, y: itemTexture.size().height)
-            itemScoreNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: itemTexture.size().width , height: itemTexture.size().height))
-            itemScoreNode.physicsBody?.isDynamic = false
-            itemScoreNode.physicsBody?.categoryBitMask = self.itemScoreCategory
-            itemScoreNode.physicsBody?.contactTestBitMask = self.birdCategory
+            ///itemScoreNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: itemTexture.size().width , height: itemTexture.size().height))
+            ///itemScoreNode.physicsBody?.isDynamic = false
+            ///itemScoreNode.physicsBody?.categoryBitMask = self.itemScoreCategory
+            ///itemScoreNode.physicsBody?.contactTestBitMask = self.birdCategory
             
             
             
-            item.addChild(itemScoreNode)
+            ///item.addChild(itemScoreNode)
         
     })
         // 次の壁作成までの時間待ちのアクションを作成
@@ -342,7 +346,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          bird.physicsBody?.collisionBitMask = groundCategory | wallCategory    // ←追加
          bird.physicsBody?.contactTestBitMask = groundCategory | wallCategory
 
-        
+        item.physicsBody?.collisionBitMask = groundCategory | wallCategory
+        item.physicsBody?.contactTestBitMask = groundCategory | wallCategory
         
         
          // アニメーションを設定
